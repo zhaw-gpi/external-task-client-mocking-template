@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <!-- Version von Maven -->
+    <modelVersion>4.0.0</modelVersion>
+    
+    <!-- Grundangaben zum Maven-Projekt -->
+    <groupId>ch.zhaw.gpi</groupId>
+    <artifactId>external-task-client-mocking-template</artifactId>
+    <name>External Task Client Mocking Template</name>
+    <version>1.0.1</version>
+    
+    <!-- Konfiguration des Maven-Projekts -->
+    <packaging>jar</packaging>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+    </properties>
+    
+    <!-- Legt die einzelnen Abhängigkeiten des Maven-Projekts fest -->
+    <dependencies>
+        <!-- Importiert die Camunda External Task Client-Abhängigkeit
+        https://mvnrepository.com/artifact/org.camunda.bpm/camunda-external-task-client/1.0.0 -->
+        <dependency>
+            <groupId>org.camunda.bpm</groupId>
+            <artifactId>camunda-external-task-client</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+    </dependencies>
+</project>
