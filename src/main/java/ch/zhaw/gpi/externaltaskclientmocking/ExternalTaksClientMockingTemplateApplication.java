@@ -59,18 +59,25 @@ public class ExternalTaksClientMockingTemplateApplication {
          *    Oder wer sich mit Lambda-Expressions auskennt, kann
          *    dies auch kürzer haben wie z.B. gezeigt in 
          *    https://docs.camunda.org/get-started/quick-start/service-task/#implement-an-external-task-worker
+         *    https://github.com/camunda/camunda-external-task-client-java/blob/1.0.0/client/src/main/java/org/camunda/bpm/client/topic/TopicSubscriptionBuilder.java
          */
         SendTweetHandler tweetSenderHandler = new SendTweetHandler();
 
         /**
          *    b) Das Registrieren geschieht über einen Fluent Builder wie schon
-         *       in Schritt 1. Er umfasst:
+         *       in Schritt 1. Es ist im Folgenden zweimal aufgeführt für zwei
+         *       Topics. Er umfasst:
          *       - Festlegen des Topics (subscribe)
          *       - Die Handler-Klasse (handler), welche gefetchte Tasks abarbeitet
          *       - Das eigentliche Registrieren (open)
          */
         externalTaskClient
-                .subscribe("SendTweet") 
+                .subscribe("SendTweet")
+                .handler(tweetSenderHandler)
+                .open();
+        
+        externalTaskClient
+                .subscribe("SendTweetTime")
                 .handler(tweetSenderHandler)
                 .open();
     }

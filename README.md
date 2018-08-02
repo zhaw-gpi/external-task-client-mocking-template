@@ -11,7 +11,7 @@ Entsprechend enthält das Projekt lediglich folgende Komponenten
 1. Camunda External Task Client als einzige Maven-Abhängigkeit
 2. Eine einzige Klasse TweetSenderMocked mit folgender Funktionalität: Sie implementiert 
 den External Task Client von Camunda, welcher einen sogenannten Topic 
-(SendTweet) bei einer Process Engine abonniert und dann allenfalls vorhandene 
+(SendTweet oder SendTweetTime) bei einer Process Engine abonniert und dann allenfalls vorhandene 
 Aufgaben erledigt und dies der Process Engine mitteilt. Das Tweet senden wird dabei 
 nur gemocked (Ausgabe in Konsole).
 
@@ -33,7 +33,7 @@ Spring Boot-Applikation enthält, die auch wirklich Tweets veröffentlicht.
 4. Für den Start ist ein Run (Netbeans), respektive "java -jar .\target\external-task-client-mocking-1.0.1.jar" (Cmd) erforderlich. Dabei wird die Main-Methode in TweetSenderMocked.java ausgeführt.
 
 ## Nutzung
-1. Damit man den Client in Aktion sieht, muss mindestens eine Aufgabe vom Topic "SendTweet" zu erledigen sein.
+1. Damit man den Client in Aktion sieht, muss mindestens eine Aufgabe vom Topic "SendTweet" oder "SendTweetTime" zu erledigen sein.
 2. Hierzu steht im Projekt Template ein Prozess für das zeitgesteuerte Senden von Tweets zur Verfügung, damit es zirka alle 10 Sekunden etwas zu tun gibt.
 3. Zirka alle 10 Sekunden sollte daher in der Output-Konsole des External Task Clients der Eintrag "Tweet wird geposted: Aktuelle Uhrzeit ist ..." erscheinen...
 4. ...und im Cockpit ist die zuvor laufende Prozessinstanz nicht mehr sichtbar (da beendet).
