@@ -2,6 +2,7 @@ package ch.zhaw.gpi.externaltaskclientmocking;
 
 import ch.zhaw.gpi.externaltaskclientmocking.handlers.SendTweetHandler;
 import org.camunda.bpm.client.ExternalTaskClient;
+import org.camunda.bpm.client.exception.ExternalTaskClientException;
 
 /**
  * Diese Klasse implementiert den External Task Client von Camunda, welcher
@@ -27,7 +28,8 @@ import org.camunda.bpm.client.ExternalTaskClient;
 public class ExternalTaksClientMockingTemplateApplication {
 
     public static void main(String[] args) {
-        /**
+        try {
+            /**
          * 1. Eine neue External Task Client-Instanz erstellen und konfigurieren mit dem ExternalTaskClientBuilder
          *    https://github.com/camunda/camunda-external-task-client-java/blob/1.0.0/client/src/main/java/org/camunda/bpm/client/ExternalTaskClientBuilder.java
          */
@@ -80,5 +82,8 @@ public class ExternalTaksClientMockingTemplateApplication {
                 .subscribe("SendTweetTime")
                 .handler(tweetSenderHandler)
                 .open();
+        } catch (ExternalTaskClientException etce) {
+            System.err.println("Fehler beim Erstellen des External Task Clients. Details: " + etce.getLocalizedMessage());
+        }
     }
 }

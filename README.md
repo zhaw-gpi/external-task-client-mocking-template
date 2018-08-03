@@ -1,6 +1,6 @@
 Björn Scheppler, 2.8.2018
 
-# Camunda External Task Client Mocking Template (external-task-client-mocking)
+# Camunda External Task Client Mocking Template (external-task-client-mocking-template)
 Dieses Maven-Projekt kann genutzt werden als Startpunkt für Mocking-Projekte, 
 bei welchen Tasks, die von einer Camunda Process Engine "veröffentlicht" werden, abzuarbeiten. 
 Als Basis wird dafür der Java External Task Client von Camunda verwendet, welcher 
