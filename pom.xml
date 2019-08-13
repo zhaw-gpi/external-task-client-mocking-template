@@ -7,15 +7,15 @@
     <groupId>ch.zhaw.gpi</groupId>
     <artifactId>external-task-client-mocking-template</artifactId>
     <name>External Task Client Mocking Template</name>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
     
     <!-- Konfiguration des Maven-Projekts -->
     <packaging>jar</packaging>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>12</maven.compiler.source>
+        <maven.compiler.target>12</maven.compiler.target>
     </properties>
     
     <!-- Legt die einzelnen Abhängigkeiten des Maven-Projekts fest -->
@@ -25,7 +25,38 @@
         <dependency>
             <groupId>org.camunda.bpm</groupId>
             <artifactId>camunda-external-task-client</artifactId>
-            <version>1.0.0</version>
+            <version>1.2.1</version>
+        </dependency>
+        
+        <!-- In OpenJDK ist die folgende für die XML-Verarbeitung erforderliche 
+            Bibliothek nicht mehr standardmässig dabei -->
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-impl</artifactId>
+            <version>2.2.3</version>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <!-- The Spring Boot Maven Plugin provides Spring Boot support in Maven, 
+            allowing you to package executable jar or war archives and run an application “in-place”.
+            https://docs.spring.io/spring-boot/docs/2.0.4.RELEASE/maven-plugin/usage.html -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>2.0.3.RELEASE</version>
+                <configuration>
+                    <layout>ZIP</layout>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>
