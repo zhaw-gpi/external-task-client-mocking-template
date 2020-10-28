@@ -1,8 +1,6 @@
 package ch.zhaw.gpi.externaltaskclientmocking;
 
-import ch.zhaw.gpi.externaltaskclientmocking.handlers.SendTweetHandler;
 import org.camunda.bpm.client.ExternalTaskClient;
-import org.camunda.bpm.client.exception.ExternalTaskClientException;
 
 /**
  * Diese Klasse implementiert den External Task Client von Camunda, welcher
@@ -17,30 +15,25 @@ import org.camunda.bpm.client.exception.ExternalTaskClientException;
  * kommunizieren.
  * 
  * In einer produktiven Applikation gäbe es sicher mehr Schichten (z.B. der Client
- * selbst ausgelagert). Hier ist lediglich das (gemockte) Senden der Tweets in
- * einen eigenen Service ausgelagert, um den Vergleich mit dem funktionsfähigen
- * Projekt (https://github.com/zhaw-gpi/external-task-client-spring-boot-template), 
- * welches tatsächlich Tweets sendet, zu vereinfachen. Und auch der
- * Handler (SendTweetHandler) ist in einer eigenen Klasse ausgelagert.
+ * selbst ausgelagert). Hier ist lediglich der Handler in eine eigene Klasse ausgelagert.
  *
  * @author scep
  */
-public class ExternalTaksClientMockingTemplateApplication {
+public class ExternalTaskClientApp {
 
     public static void main(String[] args) {
-        try {
-            /**
+        /**
          * 1. Eine neue External Task Client-Instanz erstellen und konfigurieren mit dem ExternalTaskClientBuilder
-         *    https://github.com/camunda/camunda-external-task-client-java/blob/1.0.0/client/src/main/java/org/camunda/bpm/client/ExternalTaskClientBuilder.java
          */
         ExternalTaskClient externalTaskClient = ExternalTaskClient
                 .create() // Den ExternalTaskClientBuilder initiieren
-                .baseUrl("http://localhost:8080/rest") // URL der REST API der Process Engine
-                .workerId("ExternalTaksClientMockingTemplateApplication") // Eindeutiger Name, damit die Process Engine "weiss", wer einen bestimmten Task gelocked hat
+                .baseUrl("http://localhost:8080/engine-rest") // URL der REST API der Process Engine
+                .workerId("ExternalTaskClientApp") // Eindeutiger Name, damit die Process Engine "weiss", wer einen bestimmten Task gelocked hat
                 .maxTasks(10) // Wie viele Tasks sollen maximal auf einen "Schlag" (Batch) gefetched werden
-                .lockDuration(2000) // Long Polling für 2 Sekunden (2000 Millisekunden) -> siehe https://docs.camunda.org/manual/latest/user-guide/process-engine/external-tasks/#long-polling-to-fetch-and-lock-external-tasks
+                .lockDuration(20000) // Wie lange sollen die Tasks gelocked werden (20000 Millisekunden)
                 .build(); // Die External Task Client-Instanz mit den vorhergehenden Angaben erstellen
         
+                
         /**
          * 2. Der External Task Client kann sich für mehrere Topics registrieren,
          *    in diesem Beispiel nur für das "SendTweet"-Topic. Registrieren
@@ -61,7 +54,6 @@ public class ExternalTaksClientMockingTemplateApplication {
          *    Oder wer sich mit Lambda-Expressions auskennt, kann
          *    dies auch kürzer haben wie z.B. gezeigt in 
          *    https://docs.camunda.org/get-started/quick-start/service-task/#implement-an-external-task-worker
-         *    https://github.com/camunda/camunda-external-task-client-java/blob/1.0.0/client/src/main/java/org/camunda/bpm/client/topic/TopicSubscriptionBuilder.java
          */
         SendTweetHandler tweetSenderHandler = new SendTweetHandler();
 
@@ -82,8 +74,5 @@ public class ExternalTaksClientMockingTemplateApplication {
                 .subscribe("SendTweetTime")
                 .handler(tweetSenderHandler)
                 .open();
-        } catch (ExternalTaskClientException etce) {
-            System.err.println("Fehler beim Erstellen des External Task Clients. Details: " + etce.getLocalizedMessage());
-        }
     }
 }

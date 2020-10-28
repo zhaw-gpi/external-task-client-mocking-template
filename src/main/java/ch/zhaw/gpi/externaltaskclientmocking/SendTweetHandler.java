@@ -1,6 +1,5 @@
-package ch.zhaw.gpi.externaltaskclientmocking.handlers;
+package ch.zhaw.gpi.externaltaskclientmocking;
 
-import ch.zhaw.gpi.externaltaskclientmocking.services.TwitterService;
 import org.camunda.bpm.client.task.ExternalTask;
 import org.camunda.bpm.client.task.ExternalTaskHandler;
 import org.camunda.bpm.client.task.ExternalTaskService;
@@ -13,17 +12,14 @@ import org.camunda.bpm.client.task.ExternalTaskService;
  * @author scep
  */
 public class SendTweetHandler implements ExternalTaskHandler {
-    // Das eigentliche Posten des Tweets ist ausgelagert an eine Service-Klasse,
-    // die hier instanziert wird.
-    TwitterService twitterService = new TwitterService();
 
     @Override
     public void execute(ExternalTask externalTask, ExternalTaskService externalTaskService) {
         // Tweet Content aus Prozessvariable auslesen
         String tweetContent = (String) externalTask.getVariable("tweetContent");
 
-        // Den gemockten Twitter-Service aufrufen, um einen Tweet zu posten (Status updaten)
-        twitterService.updateStatus(tweetContent);
+        // Tweet posten
+        System.out.println("Tweeet wurde veröffentlicht: " + tweetContent);
 
         // Den Task erledigen
         externalTaskService.complete(externalTask);

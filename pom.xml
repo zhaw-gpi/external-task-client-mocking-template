@@ -25,7 +25,7 @@
         <dependency>
             <groupId>org.camunda.bpm</groupId>
             <artifactId>camunda-external-task-client</artifactId>
-            <version>1.2.1</version>
+            <version>1.4.0</version>
         </dependency>
         
         <!-- In OpenJDK ist die folgende für die XML-Verarbeitung erforderliche 
@@ -35,6 +35,12 @@
             <artifactId>jaxb-impl</artifactId>
             <version>2.2.3</version>
         </dependency>
+
+        <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-simple</artifactId>
+      <version>1.7.30</version>
+    </dependency>
     </dependencies>
 
     <build>
